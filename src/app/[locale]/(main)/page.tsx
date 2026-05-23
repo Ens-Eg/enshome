@@ -1,22 +1,13 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import { getTranslations } from "next-intl/server";
 import { buildSeoMetadata } from "@/lib/seo";
 import { FaWhatsapp } from "react-icons/fa";
 import HeroSection from "@/components/HomePage/HeroSection";
-import Features from "@/components/HomePage/FeatureSection";
-import TemplateShow from "@/components/HomePage/TemplateShow";
-import HowItWorks from "@/components/HomePage/HowItWorks";
-import PricingSection from "@/components/HomePage/PricingSection";
-import FAQ from "@/components/HomePage/FAQ";
-import CTA from "@/components/HomePage/Cta";
-import FooterSection from "@/components/HomePage/Footer";
-
-/** Videos only — lazy chunk; section shell still SSR with the rest of the page */
-const PhoneVideoSection = dynamic(
-  () => import("@/components/HomePage/PhoneVideoSection"),
-  { loading: () => null },
-);
+import FeaturesSection from "@/components/HomePage/sections/FeaturesSection";
+import HowItWorksSection from "@/components/HomePage/sections/HowItWorksSection";
+import HomeBelowFold from "@/components/HomePage/HomeBelowFold";
+import CtaSection from "@/components/HomePage/sections/CtaSection";
+import FooterSectionServer from "@/components/HomePage/sections/FooterSectionServer";
 
 const HOME_WHATSAPP_URL = "https://wa.me/201500800050";
 type Props = { params: Promise<{ locale: string }> };
@@ -51,14 +42,11 @@ async function Page({ params }: Props) {
   return (
     <>
       <HeroSection loginQrUrl={loginQrUrl} />
-      <Features />
-      <TemplateShow />
-      <HowItWorks />
-      <PhoneVideoSection />
-      <PricingSection />
-      <FAQ />
-      <CTA />
-      <FooterSection />
+      <FeaturesSection />
+      <HowItWorksSection />
+      <HomeBelowFold />
+      <CtaSection />
+      <FooterSectionServer />
       <a
         href={HOME_WHATSAPP_URL}
         target="_blank"

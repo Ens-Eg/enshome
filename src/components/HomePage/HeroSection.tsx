@@ -177,7 +177,7 @@ const HeroSection = ({ loginQrUrl }: HeroSectionProps) => {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[95vh] items-center overflow-hidden bg-white pt-30 pb-24 dark:bg-[#0d1117]"
+      className="relative flex min-h-0 items-center overflow-hidden bg-white pt-24 pb-12 dark:bg-[#0d1117] md:min-h-[92vh] md:pt-30 md:pb-24"
     >
       <Background />
       <div className="container mx-auto px-6 relative z-10">
@@ -186,8 +186,8 @@ const HeroSection = ({ loginQrUrl }: HeroSectionProps) => {
             isRTL ? "lg:flex-row-reverse" : ""
           }`}
         >
-          {/* Text and Content */}
-          <div className="lg:w-1/2 order-2 w-full">
+          {/* Text and Content — first on mobile */}
+          <div className="order-1 w-full lg:order-2 lg:w-1/2">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-purple-50 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 font-bold text-sm mb-6 border border-purple-100 dark:border-purple-500/30 shadow-sm">
               <span>{t("badge")}</span>
               <span>🚀</span>
@@ -227,11 +227,23 @@ const HeroSection = ({ loginQrUrl }: HeroSectionProps) => {
             </div>
           </div>
 
-          {/* Phone Preview */}
-          <div className="lg:w-1/2 relative flex justify-center order-1 w-full">
-            <div className="relative">
-              <div className="absolute inset-0 bg-linear-to-r from-purple-600 to-purple-700 dark:from-purple-500 dark:to-purple-600 blur-[100px] opacity-15 dark:opacity-25" />
-              <InteractivePhone loginQrUrl={loginQrUrl} />
+          {/* Phone Preview — static on mobile (no heavy QR JS), interactive on desktop */}
+          <div className="relative order-2 flex w-full justify-center lg:order-1 lg:w-1/2">
+            <div className="relative w-full max-w-[280px] lg:max-w-none">
+              <div className="absolute inset-0 bg-linear-to-r from-purple-600 to-purple-700 opacity-15 blur-[100px] dark:from-purple-500 dark:to-purple-600 dark:opacity-25" />
+              <div className="relative lg:hidden">
+                <OptimizedImage
+                  src="/images/temp/1sst.webp"
+                  alt=""
+                  width={280}
+                  height={560}
+                  priority
+                  className="mx-auto w-full rounded-[40px] border-4 border-slate-800 shadow-2xl"
+                />
+              </div>
+              <div className="relative hidden lg:block">
+                <InteractivePhone loginQrUrl={loginQrUrl} />
+              </div>
             </div>
           </div>
         </div>
