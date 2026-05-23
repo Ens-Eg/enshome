@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 // import Image from "next/image";       
 import { BsCheckCircle } from "react-icons/bs";
 import { templates } from "@/modules/TemplateShow";
-import LoadImage from "../ImageLoad";
+import OptimizedImage from "../ui/OptimizedImage";
 
 export const TemplateShow = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -86,12 +86,13 @@ export const TemplateShow = () => {
 
                 <div className="relative group overflow-hidden rounded-[40px] shadow-2xl border-4 border-white dark:border-[#0d1117] aspect-video">
 
-                  <LoadImage
+                  <OptimizedImage
                     src={activeTemplate.image}
                     alt={
                       isRTL ? activeTemplate.titleAr : activeTemplate.titleEn
                     }
-                    disableLazy={true}
+                    width={1280}
+                    height={720}
                     className="w-full h-full object-cover"
                   />
                 

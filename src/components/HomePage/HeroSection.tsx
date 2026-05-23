@@ -13,10 +13,24 @@ import {
 
 import { menuItemsData } from "@/modules/menuItems";
 import { MenuItem } from "@/types/types";
+import dynamic from "next/dynamic";
 import Background from "../Global/Background";
-import LoadImage from "../ImageLoad";
-import { StyledQrCode } from "@/components/Global/StyledQrCode";
+import OptimizedImage from "../ui/OptimizedImage";
 import { BsQrCode } from "react-icons/bs";
+
+const StyledQrCode = dynamic(
+  () =>
+    import("@/components/Global/StyledQrCode").then((m) => m.StyledQrCode),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="w-48 h-48 rounded-xl bg-slate-100 animate-pulse"
+        aria-hidden
+      />
+    ),
+  },
+);
 
 const InteractivePhone = () => {
   const [step, setStep] = useState(0);
@@ -132,11 +146,12 @@ const InteractivePhone = () => {
                     key={i}
                     className="flex items-center gap-4 p-3 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-white hover:border-purple-100 transition-all cursor-pointer"
                   >
-                    <div className="w-14 h-14">
-                      <LoadImage
+                    <div className="relative w-14 h-14">
+                      <OptimizedImage
                         src={item.image}
                         alt={item.name}
-                        disableLazy={true}
+                        width={56}
+                        height={56}
                         className="w-full h-full object-cover rounded-xl shadow-sm"
                       />
                     </div>

@@ -1,6 +1,9 @@
 "use client";
 
+import AppProgressBar from "@/components/Global/AppProgressBar";
 import Layout from "@/components/Dashboard/Layout";
+import "@/styles/vendor-forms.css";
+import "@/styles/dashboard-forms.css";
 import { axiosGet } from "@/shared/axiosCall";
 import { Menu } from "@/types/Menu";
 import { useLocale } from "next-intl";
@@ -58,6 +61,7 @@ export default function ParentLayout({ children }: ParentLayoutProps) {
 
   return (
     <>
+      <AppProgressBar />
       <AuthUserHydrate />
       <FcmTokenSync />
       <Layout segment={segment}>{children}</Layout>

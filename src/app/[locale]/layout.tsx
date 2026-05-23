@@ -4,15 +4,11 @@ import "./globals.css";
 import { cairo, fontVariables } from "@/lib/fonts";
 import { NextIntlClientProvider } from "next-intl";
 import RenderInProvider from "@/components/Global/RenderInProvider";
-import ProgressBar from "@/components/Global/ProgressBar";
+import AppToaster from "@/components/Global/AppToaster";
 import GoogleAnalytics from "@/components/Global/GoogleAnalytics";
 import GoogleTagManager from "@/components/Global/GoogleTagManager";
 import GoogleAds from "@/components/Global/GoogleAds";
-import "react-phone-number-input/style.css";
-import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "react-lazy-load-image-component/src/effects/blur.css";
+
 const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
 export const metadata: Metadata = {
@@ -26,7 +22,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Script to prevent flash of wrong theme
 const themeScript = `
   (function() {
     const theme = localStorage.getItem('theme');
@@ -62,19 +57,7 @@ export default async function RootLayout({
           <GoogleAnalytics />
           <GoogleAds />
         </Suspense>
-        <ProgressBar />
-        <ToastContainer
-          position={locale === "ar" ? "top-left" : "top-right"}
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={locale === "ar"}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+        <AppToaster />
         <NextIntlClientProvider>
           <RenderInProvider>{children}</RenderInProvider>
         </NextIntlClientProvider>

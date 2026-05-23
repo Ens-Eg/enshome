@@ -103,19 +103,31 @@ export function useAuthHydrate() {
 
     let cancelled = false;
 
-    void (async () => {
-      const user = await getUser();
-      if (cancelled) return;
-      if (user) {
-        dispatch(SET_ACTIVE_USER(user as UserProfile));
-      } else {
-        dispatch(REMOVE_USER());
-        Cookies.remove("sub", { path: "/" });
-      }
-    })();
+    const hydrate = () => {
+      void (async () => {
+        const user = await getUser();
+        if (cancelled) return;
+        if (user) {
+          dispatch(SET_ACTIVE_USER(user as UserProfile));
+        } else {
+          dispatch(REMOVE_USER());
+          Cookies.remove("sub", { path: "/" });
+        }
+      })();
+    };
 
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(hydrate, { timeout: 2500 });
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(id);
+      };
+    }
+
+    const timer = window.setTimeout(hydrate, 1200);
     return () => {
       cancelled = true;
+      window.clearTimeout(timer);
     };
   }, [dispatch, getUser]);
 }
