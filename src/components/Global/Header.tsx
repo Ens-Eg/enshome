@@ -109,7 +109,7 @@ function Header() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-        ? "backdrop-blur-xl bg-white/70 dark:bg-[#0d1117]/70 py-3 shadow-sm border-b border-purple-100 dark:border-purple-900"
+        ? "bg-white py-3 shadow-sm border-b border-purple-100 dark:bg-[#0d1117] dark:border-purple-900 lg:bg-white/70 lg:dark:bg-[#0d1117]/70 lg:backdrop-blur-xl"
         : "bg-transparent py-6 border-transparent"
         }`}
     >
@@ -189,7 +189,7 @@ function Header() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 backdrop-blur-xl bg-white/90 dark:bg-[#0d1117]/90 shadow-2xl p-8 lg:hidden flex flex-col gap-3 text-center border-t border-purple-50 dark:border-purple-900">
+        <div className="absolute top-full left-0 right-0 bg-white dark:bg-[#0d1117] shadow-2xl p-8 lg:hidden flex flex-col gap-3 text-center border-t border-purple-50 dark:border-purple-900">
           {navLinks.map((link) => (
             <Link
               key={link.name}

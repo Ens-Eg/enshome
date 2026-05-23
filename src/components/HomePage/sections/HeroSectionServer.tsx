@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import Background from "@/components/Global/Background";
 import OptimizedImage from "@/components/ui/OptimizedImage";
-import HeroPhoneDesktop from "@/components/HomePage/HeroPhoneDesktop";
+import HeroPhoneDesktopGate from "@/components/HomePage/HeroPhoneDesktopGate";
 
 type HeroSectionServerProps = {
   loginQrUrl: string;
@@ -20,7 +20,7 @@ export default async function HeroSectionServer({
   return (
     <section
       id="hero"
-      className="relative flex min-h-0 items-center overflow-hidden bg-white pt-24 pb-12 dark:bg-[#0d1117] md:min-h-[92vh] md:pt-30 md:pb-24"
+      className="relative flex min-h-0 items-center overflow-x-clip bg-white pt-24 pb-12 dark:bg-[#0d1117] md:min-h-[92vh] md:overflow-hidden md:pt-30 md:pb-24"
     >
       <Background />
       <div className="container relative z-10 mx-auto px-6">
@@ -71,9 +71,7 @@ export default async function HeroSectionServer({
                   className="mx-auto w-full rounded-[40px] border-4 border-slate-800 shadow-2xl"
                 />
               </div>
-              <div className="relative hidden lg:block">
-                <HeroPhoneDesktop loginQrUrl={loginQrUrl} />
-              </div>
+              <HeroPhoneDesktopGate loginQrUrl={loginQrUrl} />
             </div>
           </div>
         </div>

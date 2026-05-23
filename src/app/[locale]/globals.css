@@ -145,6 +145,16 @@ body {
     color 0.3s ease;
 }
 
+/* iOS WebKit (Safari, Firefox, Chrome): repaint sections after fixed header/hero */
+@supports (-webkit-touch-callout: none) {
+  #features,
+  #how-it-works,
+  #hero ~ section {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
 .dark body {
   background-color: var(--background);
   color: var(--foreground);

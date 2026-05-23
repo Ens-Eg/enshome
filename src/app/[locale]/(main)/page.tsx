@@ -13,6 +13,12 @@ import FooterSectionServer from "@/components/HomePage/sections/FooterSectionSer
 const HOME_WHATSAPP_URL = "https://wa.me/201500800050";
 type Props = { params: Promise<{ locale: string }> };
 
+export function generateStaticParams() {
+  return [{ locale: "ar" }, { locale: "en" }];
+}
+
+export const dynamic = "force-static";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });

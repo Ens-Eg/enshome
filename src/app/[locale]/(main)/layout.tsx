@@ -8,9 +8,9 @@ export default function MainLayout({
 }>) {
   return (
     <>
+      {children}
       <MainChrome />
       <LazyAppToasterLocale />
-      {children}
     </>
   );
 }
