@@ -1,4 +1,5 @@
 import MainChrome from "@/components/Global/MainChrome";
+import LazyAppToasterLocale from "@/components/Global/LazyAppToasterLocale";
 
 export default function MainLayout({
   children,
@@ -8,6 +9,7 @@ export default function MainLayout({
   return (
     <>
       <MainChrome />
+      <LazyAppToasterLocale />
       {children}
     </>
   );

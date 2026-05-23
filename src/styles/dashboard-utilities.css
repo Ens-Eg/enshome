@@ -1,0 +1,16 @@
+/* Dashboard/admin-only Tailwind utilities — keeps home CSS bundle smaller */
+@import "tailwindcss" source(none);
+
+@source "../components/Dashboard";
+@source "../components/Settings";
+@source "../components/Custom";
+@source "../components/UserDropDown";
+@source "../modules";
+@source "../app/[locale]/dashboard";
+@source "../app/[locale]/admin";
+@source "../app/[locale]/payment";
+@source "../styles/dashboard-forms.css";
+@source "../styles/vendor-forms.css";
+@source "../styles/auth.css";
+@source "../styles/pricing.css";
+@source "../styles/surfaces.css";

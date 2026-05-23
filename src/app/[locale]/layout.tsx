@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import "./globals.css";
-import { cairo, fontVariables } from "@/lib/fonts";
 import { NextIntlClientProvider } from "next-intl";
-import AppToaster from "@/components/Global/AppToaster";
 import GoogleAnalytics from "@/components/Global/GoogleAnalytics";
 import GoogleTagManager from "@/components/Global/GoogleTagManager";
 import GoogleAds from "@/components/Global/GoogleAds";
@@ -44,7 +42,6 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={locale === "ar" ? "rtl" : "ltr"}
-      className={`${fontVariables} ${cairo.className}`}
       suppressHydrationWarning
     >
       <head>
@@ -56,10 +53,7 @@ export default async function RootLayout({
           <GoogleAnalytics />
           <GoogleAds />
         </Suspense>
-        <NextIntlClientProvider>
-          <AppToaster locale={locale} />
-          {children}
-        </NextIntlClientProvider>
+        <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
     </html>
   );

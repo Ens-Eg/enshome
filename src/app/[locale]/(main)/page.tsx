@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
+import { preload } from "react-dom";
 import { getTranslations } from "next-intl/server";
 import { buildSeoMetadata } from "@/lib/seo";
-import { FaWhatsapp } from "react-icons/fa";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import HeroSectionServer from "@/components/HomePage/sections/HeroSectionServer";
 import FeaturesSection from "@/components/HomePage/sections/FeaturesSection";
 import HowItWorksSection from "@/components/HomePage/sections/HowItWorksSection";
-import TemplateShow from "@/components/HomePage/TemplateShow";
-import PhoneVideoSection from "@/components/HomePage/PhoneVideoSection";
-import PricingSection from "@/components/HomePage/PricingSection";
-import FAQ from "@/components/HomePage/FAQ";
+import HomeDeferredSections from "@/components/HomePage/HomeDeferredSections";
 import CtaSection from "@/components/HomePage/sections/CtaSection";
 import FooterSectionServer from "@/components/HomePage/sections/FooterSectionServer";
 
@@ -39,6 +37,10 @@ function buildLoginQrUrl(locale: string): string {
 
 async function Page({ params }: Props) {
   const { locale } = await params;
+  preload("/images/temp/1sst.webp", {
+    as: "image",
+    fetchPriority: "high",
+  });
   const t = await getTranslations({ locale, namespace: "personalProfile" });
   const loginQrUrl = buildLoginQrUrl(locale);
 
@@ -47,10 +49,7 @@ async function Page({ params }: Props) {
       <HeroSectionServer loginQrUrl={loginQrUrl} />
       <FeaturesSection />
       <HowItWorksSection />
-      <TemplateShow />
-      <PhoneVideoSection />
-      <PricingSection />
-      <FAQ />
+      <HomeDeferredSections />
       <CtaSection />
       <FooterSectionServer />
       <a
@@ -60,7 +59,7 @@ async function Page({ params }: Props) {
         aria-label={t("contactWhatsApp")}
         className="fixed bottom-4 left-4 z-50 flex size-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105 hover:shadow-xl focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366]"
       >
-        <FaWhatsapp className="size-8" aria-hidden />
+        <WhatsAppIcon className="size-8" />
       </a>
     </>
   );

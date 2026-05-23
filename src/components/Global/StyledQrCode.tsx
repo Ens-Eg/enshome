@@ -6,8 +6,19 @@ import {
   forwardRef,
   useImperativeHandle,
 } from "react";
-import QRCodeStyling from "qr-code-styling";
 import { getStyledQrOptions } from "@/lib/styledQr";
+
+type QRCodeStylingInstance = {
+  append: (element: HTMLElement) => void;
+  download: (options: { name: string; extension: string }) => Promise<void>;
+};
+
+type QRCodeStylingCtor = new (options: ReturnType<typeof getStyledQrOptions>) => QRCodeStylingInstance;
+
+async function loadQrCodeStyling(): Promise<QRCodeStylingCtor> {
+  const mod = await import("qr-code-styling");
+  return mod.default as QRCodeStylingCtor;
+}
 
 export type StyledQrCodeHandle = {
   download: (filename: string) => Promise<void>;
@@ -27,7 +38,7 @@ export const StyledQrCode = forwardRef<StyledQrCodeHandle, Props>(
     ref,
   ) {
     const containerRef = useRef<HTMLDivElement>(null);
-    const instanceRef = useRef<QRCodeStyling | null>(null);
+    const instanceRef = useRef<QRCodeStylingInstance | null>(null);
 
     useImperativeHandle(ref, () => ({
       download: async (filename: string) => {
@@ -42,13 +53,20 @@ export const StyledQrCode = forwardRef<StyledQrCodeHandle, Props>(
       const el = containerRef.current;
       if (!el || !value) return;
 
-      el.innerHTML = "";
-      const qr = new QRCodeStyling(
-        getStyledQrOptions({ value, size, centerLogoSrc }),
-      );
-      instanceRef.current = qr;
-      qr.append(el);
+      let cancelled = false;
+
+      void loadQrCodeStyling().then((QRCodeStyling) => {
+        if (cancelled) return;
+        el.innerHTML = "";
+        const qr = new QRCodeStyling(
+          getStyledQrOptions({ value, size, centerLogoSrc }),
+        );
+        instanceRef.current = qr;
+        qr.append(el);
+      });
+
       return () => {
+        cancelled = true;
         instanceRef.current = null;
         el.innerHTML = "";
       };
@@ -99,6 +117,7 @@ export async function downloadStyledQrPng(params: {
 
   document.body.appendChild(container);
   try {
+    const QRCodeStyling = await loadQrCodeStyling();
     const qr = new QRCodeStyling(
       getStyledQrOptions({
         value: params.value,

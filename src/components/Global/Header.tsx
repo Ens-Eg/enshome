@@ -1,11 +1,21 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useAppSelector } from "@/store/hooks";
-import UserDropDown from "../UserDropDown";
+
+const UserDropDown = dynamic(() => import("../UserDropDown"), {
+  ssr: false,
+  loading: () => (
+    <span
+      className="hidden size-9 rounded-full bg-purple-100 dark:bg-purple-500/20 lg:block"
+      aria-hidden
+    />
+  ),
+});
 import { FiMenu, FiX } from "react-icons/fi";
 import Logo from "../Global/Logo";
 import { homeLinks } from "@/modules/Header";

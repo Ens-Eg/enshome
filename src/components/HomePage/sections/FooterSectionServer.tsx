@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { Logo } from "@/components/Global/Logo";
+import FooterBrand from "@/components/Global/FooterBrand";
 import { Link } from "@/i18n/navigation";
 import { getContactInfo, getNavLinks, getSocialLinks } from "@/modules/Footer";
 
@@ -28,7 +28,7 @@ export default async function FooterSectionServer() {
       <div className="container relative z-10 mx-auto px-4">
         <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-4">
           <div className="md:col-span-1">
-            <Logo variant="white" />
+            <FooterBrand variant="white" />
             <p className="max-w-xs pt-8 text-base leading-relaxed text-gray-400 dark:text-gray-500">
               {t("description")}
             </p>

@@ -1,3 +1,4 @@
+import "@/styles/surfaces.css";
 import FooterSection from "@/components/HomePage/Footer";
 import ContactPageView from "@/components/HomePage/ContactPageView";
 

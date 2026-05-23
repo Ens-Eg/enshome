@@ -1,3 +1,4 @@
+import "@/styles/surfaces.css";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import FooterSection from "@/components/HomePage/Footer";

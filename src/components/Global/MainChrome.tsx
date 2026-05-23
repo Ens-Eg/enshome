@@ -3,7 +3,7 @@
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
 import useCatchError from "@/hooks/useCatchError";
-import AuthHydrate from "./AuthHydrate";
+import DeferredAuthHydrate from "./DeferredAuthHydrate";
 import AppProgressBar from "./AppProgressBar";
 import Header from "./Header";
 
@@ -16,7 +16,7 @@ export default function MainChrome() {
 
   return (
     <Provider store={store}>
-      <AuthHydrate />
+      <DeferredAuthHydrate />
       <AppProgressBar />
       <Header />
     </Provider>

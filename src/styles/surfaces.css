@@ -1,0 +1,30 @@
+/* Gradient page backgrounds (auth, FAQ, contact, legal) — not on home LCP path */
+.bg-gradient-app {
+  background-image:
+    radial-gradient(
+      1200px 600px at 10% 10%,
+      color-mix(in oklab, var(--primary) 15%, transparent) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      1000px 500px at 90% 20%,
+      color-mix(in oklab, var(--secondary) 16%, transparent) 0%,
+      transparent 60%
+    ),
+    linear-gradient(180deg, #ffffff, #f6f8fc);
+}
+
+.dark .bg-gradient-app {
+  background-image:
+    radial-gradient(
+      1200px 600px at 10% 10%,
+      color-mix(in oklab, var(--primary) 10%, transparent) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      1000px 500px at 90% 20%,
+      color-mix(in oklab, var(--secondary) 10%, transparent) 0%,
+      transparent 60%
+    ),
+    linear-gradient(180deg, #0d1117, #161b22);
+}

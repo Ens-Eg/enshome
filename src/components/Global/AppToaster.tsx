@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
 
 const ToastContainer = dynamic(
   () => import("react-toastify").then((m) => m.ToastContainer),
@@ -14,6 +14,10 @@ type AppToasterProps = {
 
 export default function AppToaster({ locale }: AppToasterProps) {
   const isRtl = locale === "ar";
+
+  useEffect(() => {
+    void import("react-toastify/dist/ReactToastify.css");
+  }, []);
 
   return (
     <ToastContainer

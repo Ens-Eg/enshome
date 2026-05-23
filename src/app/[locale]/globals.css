@@ -1,12 +1,20 @@
 @import "tailwindcss";
+@import "@fontsource/tajawal/400.css";
+@import "@fontsource/tajawal/500.css";
+@import "@fontsource/tajawal/700.css";
+
+/* Exclude dashboard/admin trees from the global bundle (see dashboard-utilities.css) */
+@source not "../../../components/Dashboard";
+@source not "../../../components/Settings";
+@source not "../../../components/Custom";
+@source not "../../../app/[locale]/dashboard";
+@source not "../../../app/[locale]/admin";
 
 html {
   scroll-behavior: smooth;
 }
 
 :root {
-  /* Modern palette */
-  /* --primary: #06bed6; */
   --primary: #9234ea;
   --secondary: #9234ea;
   --royal-purple: #1a0b2e;
@@ -35,8 +43,8 @@ button {
   --color-secondary: var(--primary);
   --color-accent: var(--accent);
   --color-text-primary: var(--text-primary);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Tajawal", system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
   --color-royal-purple: var(--royal-purple);
   --color-deep-indigo: var(--deep-indigo);
   --color-accent-purple: var(--accent-purple);
@@ -62,17 +70,6 @@ button {
   @apply px-[10px] lg:px-[30px] max-w-7xl mx-auto;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes logo-spin {
   0% {
     transform: rotate(0deg) scale(1);
@@ -95,7 +92,6 @@ button {
   animation: logo-spin 5s ease-in-out infinite;
 }
 
-/** Laser line over QR preview (HeroSection phone mock) */
 @keyframes heroQrScan {
   0%,
   100% {
@@ -141,7 +137,7 @@ button {
 }
 
 body {
-  font-family: var(--font-tajawal), var(--font-cairo), sans-serif;
+  font-family: "Tajawal", system-ui, sans-serif;
   background-color: var(--background);
   color: var(--foreground);
   transition:
@@ -153,184 +149,3 @@ body {
   background-color: var(--background);
   color: var(--foreground);
 }
-
-/* Dark mode gradient background */
-.dark .bg-gradient-app {
-  background-image:
-    radial-gradient(
-      1200px 600px at 10% 10%,
-      color-mix(in oklab, var(--primary) 10%, transparent) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      1000px 500px at 90% 20%,
-      color-mix(in oklab, var(--secondary) 10%, transparent) 0%,
-      transparent 60%
-    ),
-    linear-gradient(180deg, #0d1117, #161b22);
-}
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-slideUp {
-  animation: slideUp 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* App gradient background helper */
-.bg-gradient-app {
-  background-image:
-    radial-gradient(
-      1200px 600px at 10% 10%,
-      color-mix(in oklab, var(--primary) 15%, transparent) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      1000px 500px at 90% 20%,
-      color-mix(in oklab, var(--secondary) 16%, transparent) 0%,
-      transparent 60%
-    ),
-    linear-gradient(180deg, #ffffff, #f6f8fc);
-}
-
-/* Card gradient ring container */
-.card-gradient {
-  background: linear-gradient(
-    135deg,
-    color-mix(in oklab, var(--primary) 25%, transparent),
-    color-mix(in oklab, var(--secondary) 25%, transparent)
-  );
-  padding: 1px; /* gradient border thickness */
-  @apply rounded-md;
-}
-
-.btn-gradient-primary {
-  background-image: linear-gradient(to left, var(--primary), var(--secondary));
-  color: white;
-}
-.btn-gradient-primary:hover {
-  filter: brightness(1.03);
-  box-shadow: 0 10px 22px 0 color-mix(in oklab, var(--primary) 22%, transparent);
-}
-
-/* From Uiverse.io by mrhyddenn */
-.btn-container {
-  position: relative;
-  padding: 10px 20px;
-  font-size: 14px;
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 2px;
-  background: transparent;
-  color: #fff;
-  overflow: hidden;
-  box-shadow: 0 0 0 0 transparent;
-  -webkit-transition: all 0.2s ease-in;
-  -moz-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in;
-  @apply rounded-md;
-}
-
-.btn-container:hover {
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
-}
-
-.btn-container:hover::before {
-  -webkit-animation: sh02 0.5s 0s linear;
-  -moz-animation: sh02 0.5s 0s linear;
-  animation: sh02 0.5s 0s linear;
-}
-
-.btn-container::before {
-  content: "";
-  display: block;
-  width: 0px;
-  height: 86%;
-  position: absolute;
-  top: 7%;
-  left: 0%;
-  opacity: 0;
-  background: #fff;
-  box-shadow: 0 0 50px 30px #fff;
-  -webkit-transform: skewX(-20deg);
-  -moz-transform: skewX(-20deg);
-  -ms-transform: skewX(-20deg);
-  -o-transform: skewX(-20deg);
-  transform: skewX(-20deg);
-}
-
-@keyframes sh02 {
-  from {
-    opacity: 0;
-    left: 0%;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-    left: 100%;
-  }
-}
-
-.btn-container:active {
-  box-shadow: 0 0 0 0 transparent;
-  -webkit-transition: box-shadow 0.2s ease-in;
-  -moz-transition: box-shadow 0.2s ease-in;
-  transition: box-shadow 0.2s ease-in;
-}
-@keyframes wiggle {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  20% {
-    transform: rotate(-18deg);
-  }
-  40% {
-    transform: rotate(16deg);
-  }
-  60% {
-    transform: rotate(-10deg);
-  }
-  80% {
-    transform: rotate(8deg);
-  }
-}
-
-/* Template preview auto-scroll animation */
-@keyframes template-scroll {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-35%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.auto-scroll-image {
-  animation: template-scroll 10s linear infinite;
-}
-
-.youtube-player-container div {
-  height: 100% !important;
-}
-
