@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import "./globals.css";
 import { cairo, fontVariables } from "@/lib/fonts";
 import { NextIntlClientProvider } from "next-intl";
-import RenderInProvider from "@/components/Global/RenderInProvider";
 import AppToaster from "@/components/Global/AppToaster";
 import GoogleAnalytics from "@/components/Global/GoogleAnalytics";
 import GoogleTagManager from "@/components/Global/GoogleTagManager";
@@ -59,7 +58,7 @@ export default async function RootLayout({
         </Suspense>
         <NextIntlClientProvider>
           <AppToaster locale={locale} />
-          <RenderInProvider>{children}</RenderInProvider>
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>

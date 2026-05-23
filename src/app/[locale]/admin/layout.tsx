@@ -1,5 +1,6 @@
 "use client";
 
+import AppProviders from "@/components/Global/AppProviders";
 import AppProgressBar from "@/components/Global/AppProgressBar";
 import Layout from "@/components/Dashboard/Layout";
 import "@/styles/vendor-forms.css";
@@ -14,13 +15,13 @@ interface ParentLayoutProps {
 
 export default function ParentLayout({ children }: ParentLayoutProps) {
   return (
-    <>
+    <AppProviders>
       <AppProgressBar />
       <AuthUserHydrate />
       <FcmTokenSync />
       <Layout segment={null} isAdmin={true}>
         {children}
       </Layout>
-    </>
+    </AppProviders>
   );
 }

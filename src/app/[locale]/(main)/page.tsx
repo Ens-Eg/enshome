@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { buildSeoMetadata } from "@/lib/seo";
 import { FaWhatsapp } from "react-icons/fa";
-import HeroSection from "@/components/HomePage/HeroSection";
+import HeroSectionServer from "@/components/HomePage/sections/HeroSectionServer";
 import FeaturesSection from "@/components/HomePage/sections/FeaturesSection";
 import HowItWorksSection from "@/components/HomePage/sections/HowItWorksSection";
-import HomeBelowFold from "@/components/HomePage/HomeBelowFold";
+import TemplateShow from "@/components/HomePage/TemplateShow";
+import PhoneVideoSection from "@/components/HomePage/PhoneVideoSection";
+import PricingSection from "@/components/HomePage/PricingSection";
+import FAQ from "@/components/HomePage/FAQ";
 import CtaSection from "@/components/HomePage/sections/CtaSection";
 import FooterSectionServer from "@/components/HomePage/sections/FooterSectionServer";
 
@@ -41,10 +44,13 @@ async function Page({ params }: Props) {
 
   return (
     <>
-      <HeroSection loginQrUrl={loginQrUrl} />
+      <HeroSectionServer loginQrUrl={loginQrUrl} />
       <FeaturesSection />
       <HowItWorksSection />
-      <HomeBelowFold />
+      <TemplateShow />
+      <PhoneVideoSection />
+      <PricingSection />
+      <FAQ />
       <CtaSection />
       <FooterSectionServer />
       <a

@@ -1,5 +1,4 @@
-import AppProgressBar from "@/components/Global/AppProgressBar";
-import Header from "@/components/Global/Header";
+import MainChrome from "@/components/Global/MainChrome";
 
 export default function MainLayout({
   children,
@@ -8,8 +7,7 @@ export default function MainLayout({
 }>) {
   return (
     <>
-      <AppProgressBar />
-      <Header />
+      <MainChrome />
       {children}
     </>
   );
