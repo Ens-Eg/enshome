@@ -1,7 +1,6 @@
-import {
-  generateToken,
-  getExistingFcmToken,
-} from "../../firebase/firebase-confing";
+async function loadFirebaseMessaging() {
+  return import("../../firebase/firebase-confing");
+}
 import { axiosPost, axiosPatch } from "@/shared/axiosCall";
 
 interface FcmMatchResponse {
@@ -44,6 +43,7 @@ function clearCachedFcmToken(): void {
 export async function resolveFcmTokenForLogout(): Promise<string | null> {
   const cached = readCachedFcmToken();
   if (cached) return cached;
+  const { getExistingFcmToken } = await loadFirebaseMessaging();
   return getExistingFcmToken();
 }
 
@@ -76,6 +76,7 @@ export function syncFcmToken(locale: string): Promise<void> {
 
   _pendingSync = (async () => {
     try {
+      const { generateToken } = await loadFirebaseMessaging();
       const fcmToken = await generateToken();
       if (!fcmToken) return;
 

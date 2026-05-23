@@ -5,39 +5,17 @@ import { buildSeoMetadata } from "@/lib/seo";
 import { FaWhatsapp } from "react-icons/fa";
 import HeroSection from "@/components/HomePage/HeroSection";
 import Features from "@/components/HomePage/FeatureSection";
+import TemplateShow from "@/components/HomePage/TemplateShow";
+import HowItWorks from "@/components/HomePage/HowItWorks";
+import PricingSection from "@/components/HomePage/PricingSection";
+import FAQ from "@/components/HomePage/FAQ";
+import CTA from "@/components/HomePage/Cta";
+import FooterSection from "@/components/HomePage/Footer";
 
 const PhoneVideoSection = dynamic(
   () => import("@/components/HomePage/PhoneVideoSection"),
-  {
-    loading: () => <div className="h-[500px]" />,
-  },
+  { loading: () => null },
 );
-
-const HowItWorks = dynamic(() => import("@/components/HomePage/HowItWorks"), {
-  loading: () => <div className="h-[400px]" />,
-});
-
-const PricingSection = dynamic(
-  () => import("@/components/HomePage/PricingSection"),
-  {
-    loading: () => <div className="h-[500px]" />,
-  },
-);
-
-const TemplateShow = dynamic(
-  () => import("@/components/HomePage/TemplateShow"),
-  {
-    loading: () => <div className="h-[500px]" />,
-  },
-);
-
-const FAQ = dynamic(() => import("@/components/HomePage/FAQ"), {
-  loading: () => <div className="h-[400px]" />,
-});
-
-const FooterSection = dynamic(() => import("@/components/HomePage/Footer"), {
-  loading: () => <div className="h-[300px]" />,
-});
 
 const HOME_WHATSAPP_URL = "https://wa.me/201500800050";
 type Props = { params: Promise<{ locale: string }> };
@@ -64,13 +42,13 @@ async function Page({ params }: Props) {
   return (
     <>
       <HeroSection />
-      <TemplateShow />
-      <PhoneVideoSection />
       <Features />
-
+      <TemplateShow />
       <HowItWorks />
+      <PhoneVideoSection />
+      <PricingSection />
       <FAQ />
-
+      <CTA />
       <FooterSection />
       <a
         href={HOME_WHATSAPP_URL}

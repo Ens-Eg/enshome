@@ -1,5 +1,7 @@
+"use client";
+
 import { REMOVE_USER, SET_ACTIVE_USER } from "@/store/authSlice/authSlice";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { axiosGet } from "@/shared/axiosCall";
@@ -9,7 +11,6 @@ import {
   isUserNotFoundApiBody,
 } from "@/shared/jwtPayload";
 import { patchSubCookieWithStaffMenuId } from "@/shared/staffSubCookie";
-import { syncFcmToken } from "@/shared/syncFcmToken";
 
 type UserProfile = {
   user?: {
@@ -41,11 +42,11 @@ function staffToAuthPayload(s: { email?: string; name?: string }): UserProfile {
   };
 }
 
-function useIsLogin() {
-  const cookies = Cookies.get("sub");
-  const [login, setLogin] = useState(true);
+/** Restores header auth state from `sub` cookie without blocking the UI or loading Firebase. */
+export function useAuthHydrate() {
   const dispatch = useDispatch();
   const locale = useLocale();
+  const startedRef = useRef(false);
 
   const getUser = useCallback(async (): Promise<UserProfile | null> => {
     const sub = Cookies.get("sub");
@@ -91,33 +92,30 @@ function useIsLogin() {
   }, [locale]);
 
   useEffect(() => {
-    const checkLogin = async () => {
-      if (cookies) {
-        const user = await getUser();
-        if (user) {
-          dispatch(SET_ACTIVE_USER(user as UserProfile));
+    if (startedRef.current) return;
+    startedRef.current = true;
 
-          void syncFcmToken(locale);
-        }
-        const time = setTimeout(() => {
-          setLogin(false);
-        }, 500);
-        return () => clearTimeout(time);
+    const sub = Cookies.get("sub");
+    if (!sub) {
+      dispatch(REMOVE_USER());
+      return;
+    }
+
+    let cancelled = false;
+
+    void (async () => {
+      const user = await getUser();
+      if (cancelled) return;
+      if (user) {
+        dispatch(SET_ACTIVE_USER(user as UserProfile));
       } else {
         dispatch(REMOVE_USER());
         Cookies.remove("sub", { path: "/" });
-
-        const time = setTimeout(() => {
-          setLogin(false);
-        }, 500);
-
-        return () => clearTimeout(time);
       }
+    })();
+
+    return () => {
+      cancelled = true;
     };
-    void checkLogin();
-  }, [cookies, dispatch, getUser, locale]);
-
-  return login;
+  }, [dispatch, getUser]);
 }
-
-export default useIsLogin;
