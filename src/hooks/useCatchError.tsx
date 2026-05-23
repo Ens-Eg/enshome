@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "@/store/hooks";
 import { isUserNotFoundApiBody } from "@/shared/jwtPayload";
 
 interface ErrorResponse {
@@ -12,8 +11,6 @@ interface ErrorResponse {
 }
 
 export default function useCatchError() {
-  const dispatch = useAppDispatch();
-
   const handleErrorResponse = useCallback(
     (data: unknown, status: number) => {
       const errorData = data as ErrorResponse;
@@ -57,8 +54,7 @@ export default function useCatchError() {
         }
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch],
+    [],
   );
 
   useEffect(() => {
