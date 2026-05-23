@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import LazyWhenVisible from "@/components/HomePage/LazyWhenVisible";
 
 function SectionPlaceholder({ minHeight = 320 }: { minHeight?: number }) {
   return (
@@ -34,18 +33,10 @@ const FAQ = dynamic(() => import("@/components/HomePage/FAQ"), {
 export default function HomeDeferredSections() {
   return (
     <>
-      <LazyWhenVisible minHeight={480}>
-        <TemplateShow />
-      </LazyWhenVisible>
-      <LazyWhenVisible minHeight={520}>
-        <PhoneVideoSection />
-      </LazyWhenVisible>
-      <LazyWhenVisible minHeight={640}>
-        <PricingSection />
-      </LazyWhenVisible>
-      <LazyWhenVisible minHeight={400}>
-        <FAQ />
-      </LazyWhenVisible>
+      <TemplateShow />
+      <PhoneVideoSection />
+      <PricingSection />
+      <FAQ />
     </>
   );
 }

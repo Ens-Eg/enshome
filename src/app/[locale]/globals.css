@@ -145,11 +145,16 @@ body {
     color 0.3s ease;
 }
 
-/* iOS WebKit (Safari, Firefox, Chrome): repaint sections after fixed header/hero */
+/* iOS WebKit (Safari, Firefox, Chrome): own compositor layer below fixed hero/header */
 @supports (-webkit-touch-callout: none) {
+  #hero {
+    isolation: isolate;
+  }
+
   #features,
   #how-it-works,
   #hero ~ section {
+    isolation: isolate;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
   }

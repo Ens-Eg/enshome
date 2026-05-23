@@ -3,15 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import Background from "@/components/Global/Background";
 import OptimizedImage from "@/components/ui/OptimizedImage";
-import HeroPhoneDesktopGate from "@/components/HomePage/HeroPhoneDesktopGate";
-
-type HeroSectionServerProps = {
-  loginQrUrl: string;
-};
-
-export default async function HeroSectionServer({
-  loginQrUrl,
-}: HeroSectionServerProps) {
+export default async function HeroSectionServer() {
   const t = await getTranslations("heroSection");
   const locale = await getLocale();
   const isRTL = locale === "ar";
@@ -60,7 +52,7 @@ export default async function HeroSectionServer({
 
           <div className="relative order-2 flex w-full justify-center lg:order-1 lg:w-1/2">
             <div className="relative w-full max-w-[280px] lg:max-w-none">
-              <div className="absolute inset-0 bg-linear-to-r from-purple-600 to-purple-700 opacity-15 blur-[100px] dark:from-purple-500 dark:to-purple-600 dark:opacity-25" />
+              <div className="absolute inset-0 bg-linear-to-r from-purple-600 to-purple-700 opacity-15 max-lg:blur-none lg:blur-[100px] dark:from-purple-500 dark:to-purple-600 dark:opacity-25" />
               <div className="relative lg:hidden">
                 <OptimizedImage
                   src="/images/temp/1sst.webp"
@@ -71,7 +63,10 @@ export default async function HeroSectionServer({
                   className="mx-auto w-full rounded-[40px] border-4 border-slate-800 shadow-2xl"
                 />
               </div>
-              <HeroPhoneDesktopGate loginQrUrl={loginQrUrl} />
+              <div
+                id="hero-phone-mount"
+                className="relative hidden w-full lg:block"
+              />
             </div>
           </div>
         </div>

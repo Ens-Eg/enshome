@@ -18,7 +18,7 @@ export default function Background() {
       {[...Array(4)].map((_, i) => (
         <div
           key={`orb-${i}`}
-          className="absolute rounded-full blur-[140px] w-[400px] h-[400px] opacity-[0.1] dark:opacity-[0.15]"
+          className="absolute h-[400px] w-[400px] rounded-full opacity-[0.1] max-lg:blur-none lg:blur-[140px] dark:opacity-[0.15]"
         />
       ))}
 

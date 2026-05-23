@@ -3,12 +3,13 @@ import { preload } from "react-dom";
 import { getTranslations } from "next-intl/server";
 import { buildSeoMetadata } from "@/lib/seo";
 import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
+import HomeDeferredSections from "@/components/HomePage/HomeDeferredSections";
 import HeroSectionServer from "@/components/HomePage/sections/HeroSectionServer";
 import FeaturesSection from "@/components/HomePage/sections/FeaturesSection";
 import HowItWorksSection from "@/components/HomePage/sections/HowItWorksSection";
-import HomeDeferredSections from "@/components/HomePage/HomeDeferredSections";
 import CtaSection from "@/components/HomePage/sections/CtaSection";
 import FooterSectionServer from "@/components/HomePage/sections/FooterSectionServer";
+import HeroPhoneDesktopPortal from "@/components/HomePage/HeroPhoneDesktopPortal";
 
 const HOME_WHATSAPP_URL = "https://wa.me/201500800050";
 type Props = { params: Promise<{ locale: string }> };
@@ -52,12 +53,13 @@ async function Page({ params }: Props) {
 
   return (
     <>
-      <HeroSectionServer loginQrUrl={loginQrUrl} />
+      <HeroSectionServer />
       <FeaturesSection />
       <HowItWorksSection />
       <HomeDeferredSections />
       <CtaSection />
       <FooterSectionServer />
+      <HeroPhoneDesktopPortal loginQrUrl={loginQrUrl} />
       <a
         href={HOME_WHATSAPP_URL}
         target="_blank"
