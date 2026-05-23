@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Link, getPathname } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import {
   FiArrowLeft as ArrowLeft,
   FiArrowRight as ArrowRight,
@@ -13,36 +13,29 @@ import {
 
 import { menuItemsData } from "@/modules/menuItems";
 import { MenuItem } from "@/types/types";
-import dynamic from "next/dynamic";
 import Background from "../Global/Background";
 import OptimizedImage from "../ui/OptimizedImage";
+import { StyledQrCode } from "@/components/Global/StyledQrCode";
 import { BsQrCode } from "react-icons/bs";
 
-const StyledQrCode = dynamic(
-  () =>
-    import("@/components/Global/StyledQrCode").then((m) => m.StyledQrCode),
-  {
-    ssr: false,
-    loading: () => (
-      <div
-        className="w-48 h-48 rounded-xl bg-slate-100 animate-pulse"
-        aria-hidden
-      />
-    ),
-  },
-);
+type InteractivePhoneProps = {
+  loginQrUrl: string;
+};
 
-const InteractivePhone = () => {
+const InteractivePhone = ({ loginQrUrl }: InteractivePhoneProps) => {
   const [step, setStep] = useState(0);
   const t = useTranslations("heroSection");
   const locale = useLocale();
   const isRTL = locale === "ar";
-  const loginPath = getPathname({ href: "/auth/login", locale });
-  const [loginQrUrl, setLoginQrUrl] = useState("");
+  const [qrValue, setQrValue] = useState(loginQrUrl);
 
   useEffect(() => {
-    setLoginQrUrl(`${window.location.origin}${loginPath}`);
-  }, [loginPath]);
+    if (loginQrUrl.startsWith("http")) {
+      setQrValue(loginQrUrl);
+      return;
+    }
+    setQrValue(`${window.location.origin}${loginQrUrl}`);
+  }, [loginQrUrl]);
 
   useEffect(() => {
     const timer = setInterval(() => setStep((prev) => (prev + 1) % 3), 4500);
@@ -78,19 +71,12 @@ const InteractivePhone = () => {
               className="h-full flex flex-col items-center justify-center p-8 bg-purple-50 dark:bg-purple-100"
             >
               <div className="bg-white p-5 rounded-[40px] shadow-2xl border-2 border-white/10 mb-8 flex items-center justify-center min-h-[180px]">
-                {loginQrUrl ? (
-                  <StyledQrCode
-                    value={loginQrUrl}
-                    size={280}
-                    displaySize={160}
-                    className="rounded-xl"
-                  />
-                ) : (
-                  <div
-                    className="w-48 h-48 rounded-xl bg-slate-100 animate-pulse"
-                    aria-hidden
-                  />
-                )}
+                <StyledQrCode
+                  value={qrValue}
+                  size={280}
+                  displaySize={160}
+                  className="rounded-xl"
+                />
               </div>
               <p className="text-purple-700 font-bold text-lg text-center leading-relaxed">
                 {t("scanCodeToBrowse")}
@@ -177,8 +163,11 @@ const InteractivePhone = () => {
   );
 };
 
-// --- Main Hero Section ---
-const HeroSection = () => {
+type HeroSectionProps = {
+  loginQrUrl: string;
+};
+
+const HeroSection = ({ loginQrUrl }: HeroSectionProps) => {
   const t = useTranslations("heroSection");
   const locale = useLocale();
   const isRTL = locale === "ar";
@@ -242,7 +231,7 @@ const HeroSection = () => {
           <div className="lg:w-1/2 relative flex justify-center order-1 w-full">
             <div className="relative">
               <div className="absolute inset-0 bg-linear-to-r from-purple-600 to-purple-700 dark:from-purple-500 dark:to-purple-600 blur-[100px] opacity-15 dark:opacity-25" />
-              <InteractivePhone />
+              <InteractivePhone loginQrUrl={loginQrUrl} />
             </div>
           </div>
         </div>

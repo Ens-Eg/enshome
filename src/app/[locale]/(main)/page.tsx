@@ -5,31 +5,18 @@ import { buildSeoMetadata } from "@/lib/seo";
 import { FaWhatsapp } from "react-icons/fa";
 import HeroSection from "@/components/HomePage/HeroSection";
 import Features from "@/components/HomePage/FeatureSection";
+import TemplateShow from "@/components/HomePage/TemplateShow";
+import HowItWorks from "@/components/HomePage/HowItWorks";
+import PricingSection from "@/components/HomePage/PricingSection";
+import FAQ from "@/components/HomePage/FAQ";
+import CTA from "@/components/HomePage/Cta";
+import FooterSection from "@/components/HomePage/Footer";
 
-const TemplateShow = dynamic(
-  () => import("@/components/HomePage/TemplateShow"),
-  { loading: () => null },
-);
-const HowItWorks = dynamic(() => import("@/components/HomePage/HowItWorks"), {
-  loading: () => null,
-});
+/** Videos only — lazy chunk; section shell still SSR with the rest of the page */
 const PhoneVideoSection = dynamic(
   () => import("@/components/HomePage/PhoneVideoSection"),
   { loading: () => null },
 );
-const PricingSection = dynamic(
-  () => import("@/components/HomePage/PricingSection"),
-  { loading: () => null },
-);
-const FAQ = dynamic(() => import("@/components/HomePage/FAQ"), {
-  loading: () => null,
-});
-const CTA = dynamic(() => import("@/components/HomePage/Cta"), {
-  loading: () => null,
-});
-const FooterSection = dynamic(() => import("@/components/HomePage/Footer"), {
-  loading: () => null,
-});
 
 const HOME_WHATSAPP_URL = "https://wa.me/201500800050";
 type Props = { params: Promise<{ locale: string }> };
@@ -49,13 +36,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
+function buildLoginQrUrl(locale: string): string {
+  const base = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
+  const path = locale === "ar" ? "/auth/login" : "/en/auth/login";
+  if (base) return `${base}${path}`;
+  return path;
+}
+
 async function Page({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "personalProfile" });
+  const loginQrUrl = buildLoginQrUrl(locale);
 
   return (
     <>
-      <HeroSection />
+      <HeroSection loginQrUrl={loginQrUrl} />
       <Features />
       <TemplateShow />
       <HowItWorks />
