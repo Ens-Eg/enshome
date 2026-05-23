@@ -57,8 +57,8 @@ export default async function RootLayout({
           <GoogleAnalytics />
           <GoogleAds />
         </Suspense>
-        <AppToaster />
         <NextIntlClientProvider>
+          <AppToaster locale={locale} />
           <RenderInProvider>{children}</RenderInProvider>
         </NextIntlClientProvider>
       </body>

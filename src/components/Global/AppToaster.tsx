@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useLocale } from "next-intl";
 import "react-toastify/dist/ReactToastify.css";
 
 const ToastContainer = dynamic(
@@ -9,17 +8,21 @@ const ToastContainer = dynamic(
   { ssr: false },
 );
 
-export default function AppToaster() {
-  const locale = useLocale();
+type AppToasterProps = {
+  locale: string;
+};
+
+export default function AppToaster({ locale }: AppToasterProps) {
+  const isRtl = locale === "ar";
 
   return (
     <ToastContainer
-      position={locale === "ar" ? "top-left" : "top-right"}
+      position={isRtl ? "top-left" : "top-right"}
       autoClose={3000}
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick
-      rtl={locale === "ar"}
+      rtl={isRtl}
       pauseOnFocusLoss
       draggable
       pauseOnHover
